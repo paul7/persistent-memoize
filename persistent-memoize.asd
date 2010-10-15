@@ -2,6 +2,9 @@
   :depends-on (#:postmodern #:cl-postgres+local-time #:iterate #:alexandria)
   :components ((:module "src"
 			:components ((:file "package")
-				     (:file "memoize")
-				     (:file "hash-backend")
-				     (:file "postgres-backend")))))
+				     (:file "memoize"
+					    :depends-on ("package"))
+				     (:file "hash-backend"
+					    :depends-on ("memoize"))
+				     (:file "postgres-backend"
+					    :depends-on ("memoize"))))))
