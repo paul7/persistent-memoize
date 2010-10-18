@@ -16,3 +16,9 @@
 		(remhash key storage)
 		(values nil nil))
 	      (values value found))))))
+
+(defmethod remove-memoized-value/impl ((storage hash-table) key)
+  (remhash key storage))
+
+(defmethod clear-memoized-values/impl ((storage hash-table))
+  (clrhash storage))
