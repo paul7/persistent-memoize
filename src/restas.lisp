@@ -9,7 +9,8 @@
 	       ,value
 	       (multiple-value-bind (,memoize ,expire-at ,absolute) (progn 
 								      ,@body)
-		 (if ,absolute
+		 (if (or (not ,expire-at)
+			 ,absolute)
 		     (list :memoize ,memoize
 			   :expire-at ,expire-at)
 		     (list :memoize ,memoize
