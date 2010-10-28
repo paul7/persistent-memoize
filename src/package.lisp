@@ -8,7 +8,8 @@
 	   #:*storage*
 	   #:with-memoization
 	   #:define-memoized-function
-	   #:make-hashtable-storage))
+	   #:make-hashtable-storage
+	   #:make-db-storage))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (local-time:set-local-time-cl-postgres-readers))
