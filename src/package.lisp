@@ -1,6 +1,6 @@
 (defpackage #:persistent-memoize
   (:nicknames #:pm)
-  (:use #:cl #:postmodern #:local-time #:iterate #:alexandria)
+  (:use #:cl #:local-time #:iterate #:alexandria)
   (:export #:memoize
 	   #:get-memoized-value
 	   #:remove-memoized-value
@@ -8,8 +8,4 @@
 	   #:*storage*
 	   #:with-memoization
 	   #:define-memoized-function
-	   #:make-hashtable-storage
-	   #:make-db-storage))
-
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (local-time:set-local-time-cl-postgres-readers))
+	   #:make-hashtable-storage))

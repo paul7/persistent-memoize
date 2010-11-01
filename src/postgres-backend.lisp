@@ -4,6 +4,10 @@
 
 (defparameter *default-db-spec* '("zlodb" "lisp" "lisp" "localhost" :pooled-p t))
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (use-package '#:postmodern)
+  (local-time:set-local-time-cl-postgres-readers))
+
 (defclass storage-entry ()
   ((id         :col-type   serial
 	       :accessor   storage-entry-id)
@@ -43,6 +47,8 @@
 
 (defun make-db-storage (&optional (db-spec *default-db-spec*))
   (make-instance 'storage :db-spec db-spec))
+
+(export 'make-db-storage)
 
 (defmethod memoize/impl ((storage storage) key value &key expire-at)
   (let ((entry (make-instance 'storage-entry 
