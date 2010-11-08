@@ -54,7 +54,8 @@
   (let ((entry (make-instance 'storage-entry 
 			      :key       key
 			      :value     value
-			      :expire-at expire-at)))
+			      :expire-at (or expire-at
+					     :null))))
     (with-storage storage
       (insert-dao entry)
       (clear-expired storage)
@@ -65,7 +66,8 @@
     (let ((entry (first
 		  (select-dao 'storage-entry (:and (:= 'key key)
 						   (:or (:is-null 'expire-at)
-							(:> 'expire-at (now))))))))
+							(:> 'expire-at (now))))
+			      (:desc 'id)))))
       (if entry
 	  (values (storage-entry-value entry)
 		  t)))))
