@@ -39,12 +39,18 @@
   `(let ((*storage* ,storage))
      ,@body))
 
+(defmacro memoize-with-key (key &body body)
+  (with-gensyms (value present-p)
+    `(multiple-value-bind (,value ,present-p) (get-memoized-value ,key)
+       (if ,present-p
+	   ,value
+	   (memoize ,key (progn 
+			   ,@body))))))
+
 (defmacro define-memoized-function (name args &body body)
-  (with-gensyms (key value present-p)
+  (with-gensyms (key)
     `(defun ,name ,args
        (let ((,key (list ',name ,@args)))
-	 (multiple-value-bind (,value ,present-p) (get-memoized-value ,key)
-	   (if ,present-p
-	       ,value
-	       (memoize ,key (progn 
-			       ,@body))))))))
+	 (memoize-with-key ,key 
+	   ,@body)))))
+
